@@ -99,6 +99,7 @@ function editProjectForm() {
     selectInput.appendChild(schoolOption);
     selectInput.appendChild(choreOption);
 
+
     form.appendChild(selectLabel);
     form.appendChild(selectInput);
 
