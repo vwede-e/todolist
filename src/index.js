@@ -27,6 +27,12 @@ manager.handleReadFromLocalStorage();
 const mobileMenuSection = document.querySelector(".mobile-menu-section");
 mobileMenuSection.style.display = "none";
 
+window.addEventListener("resize", () => {
+    if (window.innerWidth <= 500) {
+        mobileMenuSection.style.display = "none";
+    }
+})
+
 const projectSection = document.querySelector("section.project-section");
 
 
@@ -44,8 +50,10 @@ mobileMenuHamburger.addEventListener("click", ()=> {
 
 
 //event listeners
-const navigationsNodeList = document.querySelectorAll(".menu-list > li");
+const navigationsNodeList = document.querySelectorAll(".menu-list:not(.mobile-menu-container) > li");
+const mobileNavigationsNodeList = document.querySelectorAll(".mobile-menu-container > li");
 const navigationsArray = [...navigationsNodeList];
+const mobileNavigationsArray = [...mobileNavigationsNodeList];
 
 
 //event listener for navigations
@@ -55,13 +63,21 @@ navigationsArray.forEach((navigation) => {
         handleCorrectNav(event.target.textContent);
         projectSection.innerHTML = "";
         manager.handleGetProjectsByCategories(event.target.textContent.toLowerCase());
-        if (event.target.parentElement.classList.contains("mobile-menu-container")) {
-            event.target.parentElement.parentElement.style.display = "none";
-        }
     }
      )
     });
 
+
+    
+mobileNavigationsArray.forEach((navigation) => { 
+    navigation.addEventListener("click", (event) => {
+           /* event.target.parentElement.parentElement.style.display = "none"; */
+           handleCorrectNav(event.target.textContent, "mobile");
+           projectSection.innerHTML = "";
+           manager.handleGetProjectsByCategories(event.target.textContent.toLowerCase());
+    }
+     )
+    });
 
 //event listener for add new project button   
 
@@ -291,11 +307,17 @@ function handleEditProjectButtonClick() {
     }
 }
 
-function handleCorrectNav(section) {
+function handleCorrectNav(section, device="notmobile") {
     // get name of current section
-    const currSection = manager.getCurrentSection(); 
+    //const currSection = manager.getCurrentSection(); 
+    let currNavigation;
 
-    const currNavigation = navigationsArray.find((navigation)=> navigation.textContent === section);
+    if (device === "mobile") {
+        currNavigation = mobileNavigationsArray.find((navigation)=> navigation.textContent === section);
+    }
+    else {
+        currNavigation = navigationsArray.find((navigation)=> navigation.textContent === section);
+    }
     const prevSection = document.getElementById("current-section");
     if (prevSection) {
         prevSection.removeAttribute("id", "current-section");
@@ -304,5 +326,9 @@ function handleCorrectNav(section) {
     manager.setCurrentSection(currNavigation.textContent);
 }
 
-
-handleCorrectNav("ALL");
+if (window.innerWidth <= 500) {
+    handleCorrectNav("ALL", "mobile")
+}
+else {
+    handleCorrectNav("ALL");
+}

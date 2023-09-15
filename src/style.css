@@ -1,3 +1,4 @@
+
 header {
     background-color: #8449BA;
     border-bottom: 1px solid #fff;
@@ -20,7 +21,7 @@ nav {
 }
 
 #current-section {
-    background-color: darkblue;
+    background-color: red;
 }
 
 .logo-container {
