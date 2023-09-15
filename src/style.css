@@ -1,6 +1,6 @@
 header {
     background-color: #8449BA;
-    border: 1px solid #fff;
+    border-bottom: 1px solid #fff;
 }
 
 .nav-logo-container {
@@ -100,7 +100,7 @@ main > .search-section {
     font-weight: 600;
     align-items: center;
     cursor: pointer;
-    width: clamp(150px, 25vw, 250px);
+    width: clamp(250px, 25vw, 250px);
     justify-content: center;
 }
 
